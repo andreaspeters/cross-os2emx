@@ -225,12 +225,37 @@ If the matched packages are many, only the latest version is installed out of th
     `./bootstrap`
 
 3. Build:
-    `make`
+    `make MAKEINFO=true`
 
 4. Install:
-    `make install`
+    `make install MAKEINFO=true`
 
     This will install the built files into `$HOME/opt/os2emx`.
+
+## Linux host: building OS/2 DLL projects with CMake
+
+After `make install`, the complete cross toolchain is available below
+`$HOME/opt/os2emx` (or below the prefix selected with `PREFIXROOT`).  The
+installed CMake cross file is:
+
+```text
+$HOME/opt/os2emx/share/cmake/cross/i686-pc-os2-emx.cmake
+```
+
+It selects the `i686-pc-os2-emx` compiler, the target sysroot, the OMF
+archiver, and the OS/2 OMF linker flags.  A project can therefore be built
+from Linux with the normal CMake/Make workflow:
+
+```sh
+cmake -S . -B build-os2 \
+  -DCMAKE_TOOLCHAIN_FILE="$HOME/opt/os2emx/share/cmake/cross/i686-pc-os2-emx.cmake"
+make -C build-os2 -j2
+```
+
+The resulting executables and DLLs are OS/2 binaries.  Do not use the host
+compiler or the host `ar` for target objects; the cross file sets these tools
+automatically.  Projects which need additional OS/2 libraries should install
+their headers and OMF libraries below the toolchain sysroot.
 
 * **NOTE 1**: Some tools and libs such as `gettext`, `autopoint`, `textinfo`, `flex`, `bison`, and so on are required by `binutils` and `gcc`.
 * **NOTE 2**: `libssl` and `libcrypto` of `openssl` are required by `CMake`.

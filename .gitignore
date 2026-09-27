@@ -1,10 +1,23 @@
+# Local build output and downloaded/generated files
+build/
+build-*/
+cmake-build-*/
+
+# Logs and generated archives
+*.log
+*.zip
 *.tar.gz
-libc-i686-pc-os2-emx
-autotools
-meson/*.txt
-meson/meson-*
-meson/meson.done
-cmake/*.cmake
-extras/setemxenv
+
+# Generated cross files and local prefixes
+cmake/i686-pc-os2-emx.cmake
+meson/i686-pc-os2-emx-aout.txt
+meson/i686-pc-os2-emx-omf.txt
+
+# Local toolchain prefixes
+opt/
+
+# Downloads and generated helper files from the bootstrap/install workflow
+autotools/
+libc-i686-pc-os2-emx/
 extras/pkg-config
-.DS_store
+extras/setemxenv

@@ -7,6 +7,9 @@ set(CMAKE_SYSTEM_PROCESSOR @TARGETCPU@)
 # which compilers to use for C and C++
 set(CMAKE_C_COMPILER @PREFIX@/bin/@TARGETSPEC@-gcc)
 set(CMAKE_CXX_COMPILER @PREFIX@/bin/@TARGETSPEC@-g++)
+set(CMAKE_AR @PREFIX@/@TARGETSPEC@/bin/emxomfar)
+set(CMAKE_RANLIB @PREFIX@/bin/@TARGETSPEC@-ranlib)
+set(CMAKE_STRIP @PREFIX@/bin/@TARGETSPEC@-strip)
 
 # the path to be passed to the compiler and the linker in the --sysroot flag
 set(CMAKE_SYSROOT @PREFIX@/@TARGETSPEC@)
@@ -28,3 +31,11 @@ set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 # append include path for os2tk45
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -idirafter ${CMAKE_SYSROOT}/include/os2tk45")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -idirafter ${CMAKE_SYSROOT}/include/os2tk45")
+
+# The OS/2 GCC/binutils port emits OMF objects and DLLs when these options are
+# present.  libcx provides the OS/2 libc extensions used by modern projects.
+set(CMAKE_C_FLAGS_INIT "-Zomf -Zsym -Zmap")
+set(CMAKE_CXX_FLAGS_INIT "-Zomf -Zsym -Zmap")
+set(CMAKE_EXE_LINKER_FLAGS_INIT "-Zomf -Zsym -Zmap -lcx -lcx0")
+set(CMAKE_SHARED_LINKER_FLAGS_INIT "-Zomf -Zsym -Zmap -lcx -lcx0")
+set(CMAKE_MODULE_LINKER_FLAGS_INIT "-Zomf -Zsym -Zmap -lcx -lcx0")
